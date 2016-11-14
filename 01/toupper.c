@@ -13,11 +13,26 @@ unsigned long *sizes;
 int no_sz = 1, no_ratio = 1, no_version = 1;
 
 static inline double gettime(void) {
-	// to be implemented
+	struct timeval time;
+	struct timezone zone;
+
+	if (0 != gettimeofday(&time, &zone)) {
+		perror("gettimeofday");
+	}
+
+	return time.tv_sec + (time.tv_usec / 1e6);
 }
 
 static void toupper_simple(char *text) {
-	// to be implemented
+	int i;
+	for (i = 0; i < strlen(text); i++) {
+		char c = text[i];
+
+		if (c >= 97 && c <= 122) {
+			char newchar = c + ('A' - 'a');
+			text[i] = newchar;
+		}
+	}
 }
 
 static void toupper_optimised(char *text) {
