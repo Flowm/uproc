@@ -36,7 +36,12 @@ static void toupper_simple(char *text) {
 }
 
 static void toupper_optimised(char *text) {
-	// to be implemented
+	while (*text) {
+		if (*text >= 0x61 && *text <= 0x7a) {
+			*text = *text - 0x20;
+		}
+		text++;
+	}
 }
 
 /*****************************************************************/
