@@ -25,7 +25,7 @@ static inline double gettime(void) {
 
 static void toupper_simple(char *text) {
 	int i;
-	for (i = 0; i < strlen(text); i++) {
+	for (i = 0; text[i] != 0; i++) {
 		char c = text[i];
 
 		if (c >= 97 && c <= 122) {
