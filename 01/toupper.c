@@ -84,8 +84,8 @@ char *init(unsigned long int sz, int ratio) {
 
 typedef void (*toupperfunc)(char *text);
 
-void run_toupper(
-    int size, int ratio, int version, toupperfunc f, const char *name) {
+void run_toupper(int size, int ratio, int version, toupperfunc f, const char *name) {
+
 	double start, stop;
 	int index;
 
@@ -105,6 +105,9 @@ void run_toupper(
 
 	if (debug)
 		printf("After:  %.40s...\n", text);
+
+	// the text will memleak here, but a free() won't work because of the funny
+	// memory alignment.
 }
 
 struct _toupperversion {
