@@ -45,6 +45,9 @@ exe: .autoclean $(VARIANTS) Makefile
 	cat results;
 	if test -a options.h; then rm options.h;fi
 
+compile: $(VARIANTS)
+.PHONY: compile
+
 $(PROGRAM)_variant1: $(sources) Makefile
 	echo '#define OPTS "VARIANT1: $($(PROGRAM)_variant1)"' > options.h
 	$($(PROGRAM)_variant1) -S -o $(PROGRAM)_variant1.s
