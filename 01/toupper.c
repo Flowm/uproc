@@ -5,6 +5,8 @@
 #include <sys/time.h>
 #include "options.h"
 
+#include <immintrin.h>
+
 int debug = 0;
 double *results;
 double *ratios;
@@ -49,6 +51,23 @@ static void toupper_autovec(char *text) {
 	for (int i = 0; i < len; i++) {
 		text[i] = text[i] & (0xFF^0x20);
 	}
+}
+
+static void toupper_intr_and(char *text) {
+	size_t len = strlen(text);
+
+#ifdef __AVX2__
+	// AVX doesn't provide boolean AND
+	// https://software.intel.com/sites/landingpage/IntrinsicsGuide/#text=_and_&techs=SSE2,AVX,AVX2&expand=269
+	// TODO: Fallback to SSE2 in case AVX2 isn't available
+	__m256i sub_mask = _mm256_set1_epi8(0xFF^0x20);
+	__m256i str = _mm256_load_si256((int *) text);
+	__m256i result = _mm256_and_si256(str, sub_mask); // AVX2 only
+	memcpy(text, &result, 256); // TODO: Directly store the data in the correct place
+
+	// TODO: Loop over all values
+	// TODO: Handle remaining chars with AVX2 mask
+#endif
 }
 
 /*****************************************************************/
@@ -124,6 +143,7 @@ struct _toupperversion {
 	{"verbose", toupper_verbose},
 	{"simple", toupper_simple},
 	{"autovec", toupper_autovec},
+	{"intr_and", toupper_intr_and},
 	{0, 0}
 };
 
