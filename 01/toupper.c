@@ -44,6 +44,13 @@ static void toupper_simple(char *text) {
 	}
 }
 
+static void toupper_autovec(char *text) {
+	size_t len = strlen(text);
+	for (int i = 0; i < len; i++) {
+		text[i] = text[i] & (0xFF^0x20);
+	}
+}
+
 /*****************************************************************/
 
 // align at 16byte boundaries
@@ -116,6 +123,7 @@ struct _toupperversion {
 } toupperversion[] = {
 	{"verbose", toupper_verbose},
 	{"simple", toupper_simple},
+	{"autovec", toupper_autovec},
 	{0, 0}
 };
 
