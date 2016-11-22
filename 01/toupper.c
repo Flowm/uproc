@@ -23,7 +23,7 @@ static inline double gettime(void) {
 	return time.tv_sec + (time.tv_usec / 1e6);
 }
 
-static void toupper_simple(char *text) {
+static void toupper_verbose(char *text) {
 	int i;
 	for (i = 0; text[i] != 0; i++) {
 		char c = text[i];
@@ -35,9 +35,9 @@ static void toupper_simple(char *text) {
 	}
 }
 
-static void toupper_optimised(char *text) {
+static void toupper_simple(char *text) {
 	while (*text) {
-		if (*text >= 0x61 && *text <= 0x7a) {
+		if (*text >= 97 && *text <= 122) {
 			*text = *text - 0x20;
 		}
 		text++;
@@ -114,8 +114,8 @@ struct _toupperversion {
 	const char *name;
 	toupperfunc func;
 } toupperversion[] = {
+	{"verbose", toupper_verbose},
 	{"simple", toupper_simple},
-	{"optimised", toupper_optimised},
 	{0, 0}
 };
 
