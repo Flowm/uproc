@@ -18,7 +18,7 @@ $(PROGRAM)_variant2 = $(GCC) -O1
 $(PROGRAM)_variant3 = $(GCC) -O2
 $(PROGRAM)_variant4 = $(GCC) -O3 #-msse2 -ftree-vectorizer-verbose=2 -fdump-tree-vect -fopt-info-vec-missed
 
-PARAMS = 80000
+PARAMS = -l 8000000
 
 #############################################################################################
 
