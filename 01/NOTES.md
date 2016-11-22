@@ -1,3 +1,9 @@
+# Approach
+- Basic C implementation first
+- Optimizing and simplifying C implementation as far as possible
+- Leveraging gcc optimizations
+
+
 ## Auto-vectorization in GCC
 - https://gcc.gnu.org/projects/tree-ssa/vectorization.html
 - Enabled by default with -O3
