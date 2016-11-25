@@ -61,11 +61,13 @@ static void toupper_intr_and(char *text) {
 	// https://software.intel.com/sites/landingpage/IntrinsicsGuide/#text=_and_&techs=SSE2,AVX,AVX2&expand=269
 	// TODO: Fallback to SSE2 in case AVX2 isn't available
 	__m256i sub_mask = _mm256_set1_epi8(0xFF^0x20);
-	__m256i str = _mm256_load_si256((int *) text);
-	__m256i result = _mm256_and_si256(str, sub_mask); // AVX2 only
-	memcpy(text, &result, 256); // TODO: Directly store the data in the correct place
+	for (int i = 0; i < len-32; i = i + 32) {
+		text = text + 32;
+		__m256i str = _mm256_load_si256((int *) text);
+		__m256i result = _mm256_and_si256(str, sub_mask);
+		_mm256_store_si256(text, result);
+	}
 
-	// TODO: Loop over all values
 	// TODO: Handle remaining chars with AVX2 mask
 #endif
 }
