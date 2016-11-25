@@ -66,8 +66,9 @@ static void toupper_intr_and(char *text) {
 		__m256i result = _mm256_and_si256(str, sub_mask);
 		_mm256_store_si256(&text[i], result);
 	}
-
-	// TODO: Handle remaining chars with AVX2 mask
+	for (int i = len; i < len; i++) {
+		text[i] = text[i] & (0xFF^0x20);
+	}
 #endif
 }
 
