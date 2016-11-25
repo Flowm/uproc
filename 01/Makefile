@@ -91,7 +91,15 @@ $(PROGRAM)_variant9: $(sources) Makefile
 	make clean
 	touch .autoclean
 
-.PHONY: clean
+.PHONY: clean remote
 clean:
 	rm -f *_variant* results*
+
+# .ssh/config:
+# Host uproc-remote
+# 	Hostname 104.199.32.168
+# 	User root
+remote: $(VARIANTS) Makefile
+	scp $(PROGRAM)_variant? uproc-remote:
+	ssh uproc-remote "for variant in $(PROGRAM)_variant?; do ./\$$variant; done"
 
