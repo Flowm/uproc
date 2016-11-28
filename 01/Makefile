@@ -47,11 +47,6 @@ exe: .autoclean $(VARIANTS) Makefile
 	cat results;
 	if test -a options.h; then rm options.h;fi
 
-slides.pdf: presentation.md img/variant4.log
-	$(MAKE) -C img/
-	pandoc -t beamer $^ -o $@
-
-
 compile: $(VARIANTS)
 .PHONY: compile
 
