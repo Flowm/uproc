@@ -3,3 +3,4 @@ result*
 .autoclean
 options.h
 *.pdf
+*.svg
