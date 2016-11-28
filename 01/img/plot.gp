@@ -1,3 +1,5 @@
+#!/usr/bin/env gnuplot
+
 ftail = 'variant4.log'
 
 set terminal svg
