@@ -53,13 +53,12 @@ static void toupper_autovec(char *text) {
 	}
 }
 
+
 static void toupper_intr_and(char *text) {
 	size_t len = strlen(text);
 	int remaining;
-
 #ifdef __AVX2__
 #define BLOCK_SIZE 32
-
 	// AVX doesn't provide boolean AND, thus AVX2 is required
 	// https://software.intel.com/sites/landingpage/IntrinsicsGuide/#text=_and_&techs=SSE2,AVX,AVX2&expand=269
 	__m256i sub_mask = _mm256_set1_epi8(~0x20);
@@ -69,11 +68,9 @@ static void toupper_intr_and(char *text) {
 		_mm256_store_si256((__m256i *) &text[i], result);
 	}
 	remaining = len - BLOCK_SIZE;
-
 #else
 #ifdef __SSE2__
 #define BLOCK_SIZE 16
-
 	__m128i sub_mask = _mm_set1_epi16(~0x20);
 	for (int i = 0; i < len-BLOCK_SIZE; i += BLOCK_SIZE) {
 		__m128i str = _mm_load_si128((__m128i *) &text[i]);
@@ -81,7 +78,6 @@ static void toupper_intr_and(char *text) {
 		_mm_store_si128((__m128i *) &text[i], result);
 	}
 	remaining = len - BLOCK_SIZE;
-
 #else
 #define BLOCK_SIZE 1
 	remaining = 0;
@@ -92,7 +88,49 @@ static void toupper_intr_and(char *text) {
 	for (int i = remaining; i < len; i++) {
 		text[i] = text[i] ^ ~0x20;
 	}
+#undef BLOCK_SIZE
 }
+
+
+static void toupper_intr_and_sse2(char *text) {
+	size_t len = strlen(text);
+#ifdef __SSE2__
+#define BLOCK_SIZE 16
+	__m128i sub_mask = _mm_set1_epi16(~0x20);
+	for (int i = 0; i < len-BLOCK_SIZE; i += BLOCK_SIZE) {
+		__m128i str = _mm_load_si128((__m128i *) &text[i]);
+		__m128i result = _mm_and_si128(str, sub_mask);
+		_mm_store_si128((__m128i *) &text[i], result);
+	}
+	// Process the remaining chars
+	for (int i = len - BLOCK_SIZE; i < len; i++) {
+		text[i] = text[i] ^ ~0x20;
+	}
+#undef BLOCK_SIZE
+#endif
+}
+
+
+static void toupper_intr_and_avx2(char *text) {
+	size_t len = strlen(text);
+#ifdef __AVX2__
+#define BLOCK_SIZE 32
+	// AVX doesn't provide boolean AND, thus AVX2 is required
+	// https://software.intel.com/sites/landingpage/IntrinsicsGuide/#text=_and_&techs=SSE2,AVX,AVX2&expand=269
+	__m256i sub_mask = _mm256_set1_epi8(~0x20);
+	for (int i = 0; i < len-BLOCK_SIZE; i += BLOCK_SIZE) {
+		__m256i str = _mm256_load_si256((__m256i *) &text[i]);
+		__m256i result = _mm256_and_si256(str, sub_mask);
+		_mm256_store_si256((__m256i *) &text[i], result);
+	}
+	// Process the remaining chars
+	for (int i = len - BLOCK_SIZE; i < len; i++) {
+		text[i] = text[i] ^ ~0x20;
+	}
+#undef BLOCK_SIZE
+#endif
+}
+
 
 /*****************************************************************/
 
@@ -167,6 +205,8 @@ struct _toupperversion {
 	{"verbose", toupper_verbose},
 	{"simple", toupper_simple},
 	{"autovec", toupper_autovec},
+	{"intr_sse2", toupper_intr_and_sse2},
+	{"intr_avx2", toupper_intr_and_avx2},
 	{"intr_and", toupper_intr_and},
 	{0, 0}
 };
