@@ -1,9 +1,9 @@
 #!/usr/bin/env gnuplot
 
-ftail = 'variant4.log'
+ftail = 'bench.log'
 
 set terminal svg
-set output "variant4.svg"
+set output "bench.svg"
 
 set yrange [0:5]
 set xlabel "Length"

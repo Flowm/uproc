@@ -121,4 +121,4 @@ void toupper_intr_and(char *text) {
 
 # Performance measuring
 
-![](img/variant4.pdf)
+![](img/bench.pdf)
