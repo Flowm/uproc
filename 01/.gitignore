@@ -2,3 +2,4 @@ result*
 *_variant*
 .autoclean
 options.h
+*.pdf

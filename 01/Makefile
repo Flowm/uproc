@@ -47,6 +47,10 @@ exe: .autoclean $(VARIANTS) Makefile
 	cat results;
 	if test -a options.h; then rm options.h;fi
 
+slides.pdf: presentation.md
+	pandoc -t beamer $^ -o $@
+
+
 compile: $(VARIANTS)
 .PHONY: compile
 

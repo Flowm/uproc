@@ -5,7 +5,7 @@ ftail = 'variant4.log'
 set terminal svg
 set output "bench.svg"
 
-set yrange [0:0.6]
+set yrange [0:5]
 set xlabel "Length"
 set ylabel "Time"
 
