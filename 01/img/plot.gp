@@ -1,9 +1,8 @@
 ftail = 'variant4.log'
 
-set terminal png size 1920,1080
-set output "bench.png"
+set terminal svg
+set output "bench.svg"
 
-#set xrange [0:2048]
 set yrange [0:0.6]
 set xlabel "Length"
 set ylabel "Time"
