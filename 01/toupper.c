@@ -49,7 +49,7 @@ static void toupper_simple(char *text) {
 static void toupper_autovec(char *text) {
 	size_t len = strlen(text);
 	for (int i = 0; i < len; i++) {
-		text[i] = text[i] & (0xFF^0x20);
+		text[i] = text[i] & ~0x20;
 	}
 }
 
@@ -60,14 +60,14 @@ static void toupper_intr_and(char *text) {
 	// AVX doesn't provide boolean AND
 	// https://software.intel.com/sites/landingpage/IntrinsicsGuide/#text=_and_&techs=SSE2,AVX,AVX2&expand=269
 	// TODO: Fallback to SSE2 in case AVX2 isn't available
-	__m256i sub_mask = _mm256_set1_epi8(0xFF^0x20);
+	__m256i sub_mask = _mm256_set1_epi8(~0x20);
 	for (int i = 0; i < len-32; i += 32) {
 		__m256i str = _mm256_load_si256((__m256i *) &text[i]);
 		__m256i result = _mm256_and_si256(str, sub_mask);
 		_mm256_store_si256((__m256i *) &text[i], result);
 	}
 	for (int i = len; i < len; i++) {
-		text[i] = text[i] & (0xFF^0x20);
+		text[i] = text[i] ^ ~0x20;
 	}
 #endif
 }
