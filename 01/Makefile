@@ -9,6 +9,7 @@ VARIANTS = $(PROGRAM)_variant1
 VARIANTS += $(PROGRAM)_variant2
 VARIANTS += $(PROGRAM)_variant3
 VARIANTS += $(PROGRAM)_variant4
+VARIANTS += $(PROGRAM)_variant8
 VARIANTS += $(PROGRAM)_variant9
 
 
@@ -18,7 +19,8 @@ $(PROGRAM)_variant1 = $(GCC) -O0 -march=native
 $(PROGRAM)_variant2 = $(GCC) -O1 -march=native
 $(PROGRAM)_variant3 = $(GCC) -O2 -march=native
 $(PROGRAM)_variant4 = $(GCC) -O3 -march=native #-msse2 -ftree-vectorizer-verbose=2 -fdump-tree-vect -fopt-info-vec-missed
-$(PROGRAM)_variant9 = $(GCC) -O3 -march=haswell -static # Force haswell and link static to test on machine with avx2
+$(PROGRAM)_variant8 = $(GCC) -O2 -march=haswell
+$(PROGRAM)_variant9 = $(GCC) -O3 -march=haswell
 
 PARAMS = -l 8000000
 
@@ -33,7 +35,7 @@ exe: .autoclean $(VARIANTS) Makefile
 	if test -a ./$(PROGRAM)_variant5; then ./$(PROGRAM)_variant5 $(PARAMS) > results5; else rm -f results5; fi
 	if test -a ./$(PROGRAM)_variant6; then ./$(PROGRAM)_variant6 $(PARAMS) > results6; else rm -f results6; fi
 	if test -a ./$(PROGRAM)_variant7; then ./$(PROGRAM)_variant7 $(PARAMS) > results7; else rm -f results7; fi
-	if test -a ./$(PROGRAM)_variant8; then ./$(PROGRAM)_variant8 $(PARAMS) > results8; else rm -f results8; fi
+	#if test -a ./$(PROGRAM)_variant8; then ./$(PROGRAM)_variant8 $(PARAMS) > results8; else rm -f results8; fi
 	#if test -a ./$(PROGRAM)_variant9; then ./$(PROGRAM)_variant9 $(PARAMS) > results9; else rm -f results9; fi
 	if test -a ./results1; then cat results1 > results; else rm -f results; fi
 	if test -a ./results2; then cat results2 >> results; fi
