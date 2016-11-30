@@ -69,7 +69,7 @@ static void toupper_intr_and(char *text) {
 #else
 #ifdef __SSE2__
 #define BLOCK_SIZE 16
-	__m128i sub_mask = _mm_set1_epi16(~0x20);
+	__m128i sub_mask = _mm_set1_epi8(~0x20);
 	for (int i = 0; i < len-BLOCK_SIZE; i += BLOCK_SIZE) {
 		__m128i str = _mm_load_si128((__m128i *) &text[i]);
 		__m128i result = _mm_and_si128(str, sub_mask);
@@ -90,7 +90,7 @@ static void toupper_intr_and_sse2(char *text) {
 	size_t len = strlen(text);
 #ifdef __SSE2__
 #define BLOCK_SIZE 16
-	__m128i sub_mask = _mm_set1_epi16(~0x20);
+	__m128i sub_mask = _mm_set1_epi8(~0x20);
 	for (int i = 0; i < len-BLOCK_SIZE; i += BLOCK_SIZE) {
 		__m128i str = _mm_load_si128((__m128i *) &text[i]);
 		__m128i result = _mm_and_si128(str, sub_mask);
