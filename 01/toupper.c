@@ -56,7 +56,6 @@ static void toupper_autovec(char *text) {
 
 static void toupper_intr_and(char *text) {
 	size_t len = strlen(text);
-	int remaining;
 #ifdef __AVX2__
 #define BLOCK_SIZE 32
 	// AVX doesn't provide boolean AND, thus AVX2 is required
@@ -67,7 +66,6 @@ static void toupper_intr_and(char *text) {
 		__m256i result = _mm256_and_si256(str, sub_mask);
 		_mm256_store_si256((__m256i *) &text[i], result);
 	}
-	remaining = len - BLOCK_SIZE;
 #else
 #ifdef __SSE2__
 #define BLOCK_SIZE 16
@@ -77,19 +75,15 @@ static void toupper_intr_and(char *text) {
 		__m128i result = _mm_and_si128(str, sub_mask);
 		_mm_store_si128((__m128i *) &text[i], result);
 	}
-	remaining = len - BLOCK_SIZE;
-#else
-#define BLOCK_SIZE 1
-	remaining = 0;
-#endif
-#endif
+#endif // SSE2
+#endif // AVX2
 
 	// Process the remaining chars
-	for (int i = remaining; i < len; i++) {
+	for (int i = len - BLOCK_SIZE; i < len; i++) {
 		text[i] = text[i] ^ ~0x20;
 	}
-#undef BLOCK_SIZE
 }
+#undef BLOCK_SIZE
 
 
 static void toupper_intr_and_sse2(char *text) {
