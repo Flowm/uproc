@@ -1,0 +1,68 @@
+VARIANT1: gcc -lm toupper.c -O0 -march=native
+Size: 100000 	Ratio: 50.000000 	Running time:	verbose: 0.000955	simple: 0.000761	autovec: 0.000260	intr_sse2: 0.000044	intr_avx2: 0.000008	intr_and: 0.000044
+VARIANT2: gcc -lm toupper.c -O1 -march=native
+Size: 100000 	Ratio: 50.000000 	Running time:	verbose: 0.000507	simple: 0.000509	autovec: 0.000131	intr_sse2: 0.000078	intr_avx2: 0.000000	intr_and: 0.000156
+VARIANT3: gcc -lm toupper.c -O2 -march=native
+Size: 100000 	Ratio: 50.000000 	Running time:	verbose: 0.000473	simple: 0.000469	autovec: 0.000057	intr_sse2: 0.000010	intr_avx2: 0.000000	intr_and: 0.000010
+VARIANT4: gcc -lm toupper.c -O3 -march=native 
+Size: 100000 	Ratio: 50.000000 	Running time:	verbose: 0.000492	simple: 0.000481	autovec: 0.000014	intr_sse2: 0.000010	intr_avx2: 0.000000	intr_and: 0.000010
+VARIANT1: gcc -lm toupper.c -O0 -march=native
+Size: 1000000 	Ratio: 50.000000 	Running time:	verbose: 0.009840	simple: 0.007657	autovec: 0.002719	intr_sse2: 0.000498	intr_avx2: 0.000130	intr_and: 0.000517
+VARIANT2: gcc -lm toupper.c -O1 -march=native
+Size: 1000000 	Ratio: 50.000000 	Running time:	verbose: 0.005787	simple: 0.005022	autovec: 0.001503	intr_sse2: 0.000876	intr_avx2: 0.000001	intr_and: 0.001405
+VARIANT3: gcc -lm toupper.c -O2 -march=native
+Size: 1000000 	Ratio: 50.000000 	Running time:	verbose: 0.004971	simple: 0.005041	autovec: 0.000639	intr_sse2: 0.000194	intr_avx2: 0.000003	intr_and: 0.000175
+VARIANT4: gcc -lm toupper.c -O3 -march=native 
+Size: 1000000 	Ratio: 50.000000 	Running time:	verbose: 0.004854	simple: 0.004977	autovec: 0.000188	intr_sse2: 0.000192	intr_avx2: 0.000001	intr_and: 0.000190
+VARIANT8: gcc -lm toupper.c -O2 -march=haswell
+Size: 1000000 	Ratio: 50.000000 	Running time:	verbose: 0.004957	simple: 0.005068	autovec: 0.000612	intr_sse2: 0.000219	intr_avx2: 0.000166	intr_and: 0.000217
+VARIANT9: gcc -lm toupper.c -O3 -march=haswell
+Size: 1000000 	Ratio: 50.000000 	Running time:	verbose: 0.005450	simple: 0.005566	autovec: 0.000270	intr_sse2: 0.000243	intr_avx2: 0.000193	intr_and: 0.000205
+VARIANT1: gcc -lm toupper.c -O0 -march=native
+Size: 10000000 	Ratio: 50.000000 	Running time:	verbose: 0.103153	simple: 0.081047	autovec: 0.027881	intr_sse2: 0.004493	intr_avx2: 0.000877	intr_and: 0.004586
+VARIANT2: gcc -lm toupper.c -O1 -march=native
+Size: 10000000 	Ratio: 50.000000 	Running time:	verbose: 0.052235	simple: 0.048021	autovec: 0.013521	intr_sse2: 0.008300	intr_avx2: 0.000003	intr_and: 0.008267
+VARIANT3: gcc -lm toupper.c -O2 -march=native
+Size: 10000000 	Ratio: 50.000000 	Running time:	verbose: 0.050582	simple: 0.054811	autovec: 0.005742	intr_sse2: 0.001837	intr_avx2: 0.000001	intr_and: 0.001615
+VARIANT4: gcc -lm toupper.c -O3 -march=native 
+Size: 10000000 	Ratio: 50.000000 	Running time:	verbose: 0.047911	simple: 0.047671	autovec: 0.001452	intr_sse2: 0.001560	intr_avx2: 0.000002	intr_and: 0.001544
+VARIANT8: gcc -lm toupper.c -O2 -march=haswell
+Size: 10000000 	Ratio: 50.000000 	Running time:	verbose: 0.048580	simple: 0.048605	autovec: 0.005727	intr_sse2: 0.001541	intr_avx2: 0.001516	intr_and: 0.001472
+VARIANT9: gcc -lm toupper.c -O3 -march=haswell
+Size: 10000000 	Ratio: 50.000000 	Running time:	verbose: 0.047868	simple: 0.048048	autovec: 0.001547	intr_sse2: 0.001787	intr_avx2: 0.001580	intr_and: 0.001505
+VARIANT1: gcc -lm toupper.c -O0 -march=native
+Size: 100000000 	Ratio: 50.000000 	Running time:	verbose: 0.981176	simple: 0.778670	autovec: 0.265695	intr_sse2: 0.047883	intr_avx2: 0.008970	intr_and: 0.047965
+VARIANT2: gcc -lm toupper.c -O1 -march=native
+Size: 100000000 	Ratio: 50.000000 	Running time:	verbose: 0.523549	simple: 0.487950	autovec: 0.140052	intr_sse2: 0.087607	intr_avx2: 0.000001	intr_and: 0.088023
+VARIANT3: gcc -lm toupper.c -O2 -march=native
+Size: 100000000 	Ratio: 50.000000 	Running time:	verbose: 0.482293	simple: 0.479806	autovec: 0.059438	intr_sse2: 0.021799	intr_avx2: 0.000002	intr_and: 0.021529
+VARIANT4: gcc -lm toupper.c -O3 -march=native 
+Size: 100000000 	Ratio: 50.000000 	Running time:	verbose: 0.484592	simple: 0.482938	autovec: 0.021685	intr_sse2: 0.020793	intr_avx2: 0.000003	intr_and: 0.022292
+VARIANT8: gcc -lm toupper.c -O2 -march=haswell
+Size: 100000000 	Ratio: 50.000000 	Running time:	verbose: 0.489886	simple: 0.484167	autovec: 0.058640	intr_sse2: 0.021616	intr_avx2: 0.021764	intr_and: 0.021090
+VARIANT9: gcc -lm toupper.c -O3 -march=haswell
+Size: 100000000 	Ratio: 50.000000 	Running time:	verbose: 0.485005	simple: 0.486549	autovec: 0.021645	intr_sse2: 0.021543	intr_avx2: 0.021835	intr_and: 0.022165
+VARIANT1: gcc -lm toupper.c -O0 -march=native
+Size: 1000000000 	Ratio: 50.000000 	Running time:	verbose: 9.727947	simple: 7.780362	autovec: 2.673973	intr_sse2: 0.458974	intr_avx2: 0.151920	intr_and: 0.588378
+VARIANT2: gcc -lm toupper.c -O1 -march=native
+Size: 1000000000 	Ratio: 50.000000 	Running time:	verbose: 5.186722	simple: 4.979564	autovec: 1.403842	intr_sse2: 0.891554	intr_avx2: 0.000003	intr_and: 0.881016
+VARIANT3: gcc -lm toupper.c -O2 -march=native
+Size: 1000000000 	Ratio: 50.000000 	Running time:	verbose: 4.761695	simple: 4.838766	autovec: 0.586678	intr_sse2: 0.212549	intr_avx2: 0.000002	intr_and: 0.218869
+VARIANT4: gcc -lm toupper.c -O3 -march=native 
+Size: 1000000000 	Ratio: 50.000000 	Running time:	verbose: 4.850838	simple: 4.788154	autovec: 0.217377	intr_sse2: 0.207887	intr_avx2: 0.000002	intr_and: 0.210022
+VARIANT8: gcc -lm toupper.c -O2 -march=haswell
+Size: 1000000000 	Ratio: 50.000000 	Running time:	verbose: 4.844770	simple: 4.854721	autovec: 0.589607	intr_sse2: 0.212507	intr_avx2: 0.212896	intr_and: 0.214079
+VARIANT9: gcc -lm toupper.c -O3 -march=haswell
+Size: 1000000000 	Ratio: 50.000000 	Running time:	verbose: 4.847937	simple: 4.847177	autovec: 0.211142	intr_sse2: 0.218547	intr_avx2: 0.211254	intr_and: 0.217716
+VARIANT1: gcc -lm toupper.c -O0 -march=native
+Size: 1410065408 	Ratio: 50.000000 	Running time:	verbose: 13.755941	simple: 10.959142	autovec: 3.755681	intr_sse2: 0.652715	intr_avx2: 0.128545	intr_and: 0.662992
+VARIANT2: gcc -lm toupper.c -O1 -march=native
+Size: 1410065408 	Ratio: 50.000000 	Running time:	verbose: 7.383769	simple: 6.930706	autovec: 1.949225	intr_sse2: 1.246180	intr_avx2: 0.000002	intr_and: 1.256561
+VARIANT3: gcc -lm toupper.c -O2 -march=native
+Size: 1410065408 	Ratio: 50.000000 	Running time:	verbose: 6.793979	simple: 6.788860	autovec: 0.831231	intr_sse2: 0.294705	intr_avx2: 0.000003	intr_and: 0.306364
+VARIANT4: gcc -lm toupper.c -O3 -march=native 
+Size: 1410065408 	Ratio: 50.000000 	Running time:	verbose: 6.871971	simple: 6.791233	autovec: 0.300296	intr_sse2: 0.309300	intr_avx2: 0.000003	intr_and: 0.295786
+VARIANT8: gcc -lm toupper.c -O2 -march=haswell
+Size: 1410065408 	Ratio: 50.000000 	Running time:	verbose: 6.844217	simple: 6.797405	autovec: 0.820687	intr_sse2: 0.299910	intr_avx2: 0.300291	intr_and: 0.306635
+VARIANT9: gcc -lm toupper.c -O3 -march=haswell
+Size: 1410065408 	Ratio: 50.000000 	Running time:	verbose: 6.778597	simple: 6.849222	autovec: 0.306981	intr_sse2: 0.305712	intr_avx2: 0.299565	intr_and: 0.305383
