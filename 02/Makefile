@@ -9,7 +9,7 @@ LIBS = -lbenchmark -lpthread
 $(NAME): $(OBJS)
 	$(CXX) $^ $(LDFLAGS) $(LIBS) -o $@
 
-.PHONY: clean distclean run
+.PHONY: clean distclean run record
 
 clean:
 	rm -f $(OBJS)
@@ -19,3 +19,6 @@ distclean: clean
 
 run: $(NAME)
 	./$(NAME)
+
+record: $(NAME)
+	sudo nice -n -10 ./$(NAME) --benchmark_out_format=csv --benchmark_out=results-cache-bench.csv
