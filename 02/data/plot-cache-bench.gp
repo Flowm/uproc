@@ -7,15 +7,15 @@ set terminal svg enhanced mouse size 1024,768
 set output "results-cache-bench-i5-5257U.svg"
 
 set xlabel "Stride"
-set xrange [0:256]
-#set xrange [0:1024]
+#set xrange [0:256]
+set xrange [0:1024]
 
 set ylabel "Speed B/s"
 set yrange [0:2.5e9]
 #set format y "%e"
 
 
-set title "Intel Core i5-5257U raw"
+set title "Intel Core i5-5257U"
 plot \
 	"<(sed -n '/^32,/p' results-cache-bench-i5-5257U.csv)" using 2:7 with lines title "32K", \
 	"<(sed -n '/^64,/p' results-cache-bench-i5-5257U.csv)" using 2:7 with lines title "64K", \
