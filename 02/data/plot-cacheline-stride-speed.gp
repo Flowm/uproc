@@ -4,7 +4,7 @@ set datafile separator ","
 set decimalsign "."
 
 set terminal svg enhanced mouse size 1024,768
-set output "results-cache-bench-i5-5257U.svg"
+set output "results-cacheline-stride-speed-i5-5257U.svg"
 
 set xlabel "Stride"
 #set xrange [0:256]
