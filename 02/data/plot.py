@@ -35,7 +35,7 @@ def main():
     plt.xlabel('block size')
     plt.ylabel('cpu time [ns]')
     plt.title('cache size benchmarking')
-    plt.legend()
+    plt.legend(loc="upper left")
 
     if not args.outputfile:
         plt.show()
