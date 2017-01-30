@@ -10,15 +10,21 @@
 # cacheline size
 
 ``` cpp
-const int size = state.range(0);
-char* arr = new char[size]();
-const int stride = state.range(1);
-int x = 0, y = 0;
+void BM_cacheline_length(benchmark::State& state) {
+	const int size = state.range(0);
+	char* arr = new char[size]();
+	const int stride = state.range(1);
+	int x = 0, y = 0;
 
-while (state.KeepRunning()) {
-	for (int i = 0; i < size; i += stride) {
-		benchmark::DoNotOptimize(x += arr[i]);
+	while (state.KeepRunning()) {
+		for (int i = 0; i < size; i += stride) {
+			x += arr[i];
+		}
+
+		benchmark::DoNotOptimize(y += x);
 	}
+	state.SetBytesProcessed(
+		state.iterations()*size/stride);
 }
 ```
 
