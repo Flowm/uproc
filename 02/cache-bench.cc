@@ -56,7 +56,7 @@ void BM_cacheline_length(benchmark::State& state) {
 }
 
 //BENCHMARK(BM_cacheline_length)->Apply(BM_cacheline_length_stride_speed_args);
-BENCHMARK(BM_cacheline_length)->Apply(BM_cacheline_length_size_speed_args);
+//BENCHMARK(BM_cacheline_length)->Apply(BM_cacheline_length_size_speed_args);
 
 
 /*
@@ -83,7 +83,7 @@ void BM_cache_size(benchmark::State& state) {
 
 	// calculate the order in which the cachelines should be accessed
 	// start with an incrementing order
-	std::vector<unsigned int> order;
+	std::vector<unsigned int> order(n);
 	std::iota(std::begin(order), std::end(order), 0);
 
 	// shuffle the order randomly.
