@@ -7,6 +7,24 @@
 * google benchmark suite
 * https://github.com/google/benchmark
 
+# cacheline size
+
+``` cpp
+const int size = state.range(0);
+char* arr = new char[size]();
+const int stride = state.range(1);
+int x = 0, y = 0;
+
+while (state.KeepRunning()) {
+	for (int i = 0; i < size; i += stride) {
+		benchmark::DoNotOptimize(x += arr[i]);
+	}
+}
+```
+
+# cacheline results
+![](../data/cacheline-size-speed-i5-5257U.png)
+
 # easiest method
 
 ```
