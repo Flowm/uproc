@@ -26,9 +26,11 @@ static void BM_cacheline_length_stride_speed_args(benchmark::internal::Benchmark
 }
 
 static void BM_cacheline_length_size_speed_args(benchmark::internal::Benchmark* b) {
-	for (int size = 1<<2; size <= 1<<16; size <<= 1)
-		for (int stride = 1<<0; stride <= 1<<4; stride <<= 1)
-			b->Args({size*256, stride});
+	for (int size = 1<<0; size <= 1<<20; size <<= 1) {
+		for (int stride = 1<<0; stride <= 1<<9; stride <<= 1)
+			b->Args({size*1024, stride});
+		b->Args({size*1024, 60});
+	}
 }
 
 void BM_cacheline_length(benchmark::State& state) {
