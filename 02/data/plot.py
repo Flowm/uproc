@@ -8,28 +8,29 @@ import csv
 
 def main():
     cmd = argparse.ArgumentParser()
-    cmd.add_argument("inputfile")
+    cmd.add_argument("inputfile", nargs="+")
     cmd.add_argument("-o", "--outputfile")
     cmd.add_argument("-s", "--linesize", type=int, default=64)
 
     args = cmd.parse_args()
 
-
-    x = []
-    y = []
-
-    with open(args.inputfile) as csvfile:
-        plots = csv.reader(csvfile, delimiter=',')
-        for row in plots:
-            if not row[0].startswith("BM"):
-                continue
-
-            x.append(int(row[0].split("/")[1]) * args.linesize)
-            y.append(float(row[2]))
-
     plt.yscale('log')
     plt.xscale('log', basex=2)
-    plt.plot(x, y, label=args.inputfile)
+
+    for ifile in args.inputfile:
+        x = []
+        y = []
+
+        with open(ifile) as csvfile:
+            plots = csv.reader(csvfile, delimiter=',')
+            for row in plots:
+                if not row[0].startswith("BM"):
+                    continue
+
+                x.append(int(row[0].split("/")[1]) * args.linesize)
+                y.append(float(row[2]))
+
+        plt.plot(x, y, label=ifile)
 
     plt.xlabel('block size')
     plt.ylabel('cpu time [ns]')
