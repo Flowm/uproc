@@ -12,17 +12,27 @@ void BM_empty(benchmark::State& state) {
 }
 //BENCHMARK(BM_empty);
 
-static void BM_cache_line_length_args(benchmark::internal::Benchmark* b) {
+
+/*
+ * Cacheline length
+ */
+static void BM_cacheline_length_stride_speed_args(benchmark::internal::Benchmark* b) {
 	// from 32 to 4096 by *= 2
-	for (int i = 1<<5; i <= 1<<12; i <<= 1)
+	for (int size = 1<<5; size <= 1<<12; size <<= 1)
 		// from 1 to 1024 by += 1
-		for (int j = 1; j <= 1024; ++j)
+		for (int stride = 1; stride <= 1024; stride++)
 			// arguments: (size in kb, stride in byte)
-			b->Args({i, j});
+			b->Args({size*1024, stride});
 }
 
-void BM_cache_line_length(benchmark::State& state) {
-	const int size = state.range(0)*1024;
+static void BM_cacheline_length_size_speed_args(benchmark::internal::Benchmark* b) {
+	for (int size = 1<<2; size <= 1<<16; size <<= 1)
+		for (int stride = 1<<0; stride <= 1<<4; stride <<= 1)
+			b->Args({size*256, stride});
+}
+
+void BM_cacheline_length(benchmark::State& state) {
+	const int size = state.range(0);
 	char* arr = new char[size]();
 	const int stride = state.range(1);
 	int x = 0, y = 0;
@@ -43,12 +53,13 @@ void BM_cache_line_length(benchmark::State& state) {
 	delete[] arr;
 }
 
-
-//BENCHMARK(BM_cache_line_length)->Args({1024,1});
-//BENCHMARK(BM_cache_line_length)->Args({1024,8});
-//BENCHMARK(BM_cache_line_length)->Apply(BM_cache_line_length_args);
+//BENCHMARK(BM_cacheline_length)->Apply(BM_cacheline_length_stride_speed_args);
+BENCHMARK(BM_cacheline_length)->Apply(BM_cacheline_length_size_speed_args);
 
 
+/*
+ * Cache size
+ */
 // 64 is the size of a cacheline
 constexpr int cacheline_size = 64;
 

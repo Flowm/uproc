@@ -3,7 +3,7 @@ SRCS = $(wildcard *.cc)
 OBJS = $(subst .cc,.o,$(SRCS))
 
 CXXFLAGS ?= -O3
-CXXFLAGS += -std=c++14 -Wall -Wextra -pedantic -Ibenchmark/include/
+CXXFLAGS += -std=c++14 -Wall -Wextra -pedantic -Ibenchmark/include/ -fno-omit-frame-pointer -Wno-unused-function
 LDFLAGS = -Lbenchmark/bin/src/ -lbenchmark -lpthread
 
 $(NAME): $(OBJS)
