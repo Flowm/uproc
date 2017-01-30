@@ -84,9 +84,7 @@ void BM_cache_size(benchmark::State& state) {
 	// calculate the order in which the cachelines should be accessed
 	// start with an incrementing order
 	std::vector<unsigned int> order;
-	for (int i = 0; i < n; i++) {
-		order.push_back(i);
-	}
+	std::iota(std::begin(order), std::end(order), 0);
 
 	// shuffle the order randomly.
 	std::random_device rd;
@@ -117,6 +115,12 @@ void BM_cache_size(benchmark::State& state) {
 
 		benchmark::DoNotOptimize(sum += current_cacheline->dummydata[0]);
 	}
+
+	state.SetBytesProcessed(
+		static_cast<int64_t>(state.iterations()) * (
+			sizeof(cacheline*) * accesses + sizeof(char)
+		)
+	);
 }
 
 static void cache_size_args(benchmark::internal::Benchmark* b) {
