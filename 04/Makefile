@@ -12,7 +12,7 @@ ifeq (,$(GBENCH_DIR))
 else
 	# Use local google benchmark lib
 	CXXFLAGS += -Ibenchmark/include/
-	LDFLAGS += -Lbenchmark/bin/src/
+	LDFLAGS += -Lbenchmark/bin/src/ -lbenchmark
 endif
 LDFLAGS += -lpthread
 

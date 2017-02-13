@@ -1,4 +1,5 @@
 #include <benchmark/benchmark_api.h>
+#include <chrono>
 
 // HELPER FUNCTIONS
 char create_char(int ratio) {
@@ -24,10 +25,8 @@ void print_string(const char* prefix, const char* string) {
 	printf("%s: %.10s\n", prefix, string);
 }
 
-// BENCHMARK TARGETS
-void BM_toupper_simple(benchmark::State& state) {
-	const unsigned long size = state.range(0);
-	const int ratio = 50; //state.range(1);
+void BM_toupper(benchmark::State& state, void (*toupper_func)(char*), unsigned long size) {
+	const int ratio = 50;
 	char* const arr = new char[size]();
 	create_string(arr, size, ratio);
 	//print_string("STR:", arr);
@@ -39,19 +38,35 @@ void BM_toupper_simple(benchmark::State& state) {
 		text = arr; // Reset text pointer to be used in algorithm
 		state.ResumeTiming();
 
-		while (*text) {
-			if (*text >= 'a' && *text <= 'z') {
-				*text = *text - 0x20;
-			}
-			text++;
-		}
+		// Pause during seems to add 150ns overhead, thus use manual timing
+		auto start = std::chrono::high_resolution_clock::now();
+		toupper_func(text);
+		auto end = std::chrono::high_resolution_clock::now();
+		auto elapsed = std::chrono::duration_cast<std::chrono::duration<double>>(end - start);
+		state.SetIterationTime(elapsed.count());
 	}
 
 	//print_string("END:", arr);
 	delete[] arr;
 }
-//BENCHMARK(BM_toupper_simple)->RangeMultiplier(2)->Range(1<<8, 1<<14);
-BENCHMARK(BM_toupper_simple)->Arg(1<<10);
+
+// BENCHMARK FUNCTIONS
+void toupper_noact(char *text) {
+	(void) text;
+}
+
+void toupper_simple(char *text) {
+	while (*text) {
+		if (*text >= 97 && *text <= 122) {
+			*text = *text - 0x20;
+		}
+		text++;
+	}
+}
+
+// REGISTER BENCHMARK FUNCTIONS
+BENCHMARK_CAPTURE(BM_toupper, toupper_noact, toupper_noact, 1<<8)->UseManualTime();
+BENCHMARK_CAPTURE(BM_toupper, toupper_simple, toupper_simple, 1<<8)->UseManualTime();
 
 
 BENCHMARK_MAIN()
