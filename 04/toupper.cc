@@ -33,27 +33,22 @@ void print_string(const char* prefix, const char* string) {
 
 void BM_toupper(benchmark::State& state, void (*toupper_func)(char*), unsigned long size) {
 	const int ratio = 50;
-	char* const arr = new char[size]();
-	create_string(arr, size, ratio);
-	//print_string("STR:", arr);
+	char* const str_orig = new char[size]();
+	char* const str_bench = new char[size]();
+	create_string(str_orig, size, ratio);
+	//print_string("STR:", str_orig);
 	char* text;
 
 	while (state.KeepRunning()) {
-		state.PauseTiming();
-		create_string(arr, size, ratio);
-		text = arr; // Reset text pointer to be used in algorithm
-		state.ResumeTiming();
+		strncpy(str_bench, str_orig, size);
+		text = str_bench; // Reset text pointer to be used in algorithm
 
-		// Pause during seems to add 150ns overhead, thus use manual timing
-		auto start = std::chrono::high_resolution_clock::now();
 		toupper_func(text);
-		auto end = std::chrono::high_resolution_clock::now();
-		auto elapsed = std::chrono::duration_cast<std::chrono::duration<double>>(end - start);
-		state.SetIterationTime(elapsed.count());
 	}
 
-	//print_string("END:", arr);
-	delete[] arr;
+	//print_string("END:", str_bench);
+	delete[] str_orig;
+	delete[] str_bench;
 }
 
 
@@ -61,7 +56,7 @@ void BM_toupper(benchmark::State& state, void (*toupper_func)(char*), unsigned l
 void toupper_noact(char *text) {
 	(void) text;
 }
-BENCHMARK_CAPTURE(BM_toupper, toupper_noact, toupper_noact, 1<<8)->UseManualTime();
+BENCHMARK_CAPTURE(BM_toupper, toupper_noact, toupper_noact, 1<<8);
 
 void toupper_simple(char *text) {
 	while (*text) {
@@ -71,7 +66,7 @@ void toupper_simple(char *text) {
 		text++;
 	}
 }
-BENCHMARK_CAPTURE(BM_toupper, toupper_simple, toupper_simple, 1<<10)->UseManualTime();
+BENCHMARK_CAPTURE(BM_toupper, toupper_simple, toupper_simple, 1<<10);
 
 static void toupper_autovec(char *text) {
 	size_t len = strlen(text);
@@ -79,7 +74,7 @@ static void toupper_autovec(char *text) {
 		text[i] = text[i] & ~0x20;
 	}
 }
-BENCHMARK_CAPTURE(BM_toupper, toupper_autovec, toupper_autovec, 1<<10)->UseManualTime();
+BENCHMARK_CAPTURE(BM_toupper, toupper_autovec, toupper_autovec, 1<<10);
 
 #ifdef __SSE2__
 #define BLOCK_SIZE 16
@@ -97,7 +92,7 @@ static void toupper_intr_and_sse2(char *text) {
 	}
 }
 #undef BLOCK_SIZE
-BENCHMARK_CAPTURE(BM_toupper, toupper_intr_and_sse2, toupper_intr_and_sse2, 1<<10)->UseManualTime();
+BENCHMARK_CAPTURE(BM_toupper, toupper_intr_and_sse2, toupper_intr_and_sse2, 1<<10);
 #endif
 
 #ifdef __AVX2__
@@ -118,7 +113,7 @@ static void toupper_intr_and_avx2(char *text) {
 	}
 }
 #undef BLOCK_SIZE
-BENCHMARK_CAPTURE(BM_toupper, toupper_intr_and_avx2, toupper_intr_and_avx2, 1<<10)->UseManualTime();
+BENCHMARK_CAPTURE(BM_toupper, toupper_intr_and_avx2, toupper_intr_and_avx2, 1<<10);
 #endif
 
 #if defined(__SSE2__) || defined(__AVX2__)
@@ -152,7 +147,7 @@ static void toupper_intr_and(char *text) {
 	}
 }
 #undef BLOCK_SIZE
-BENCHMARK_CAPTURE(BM_toupper, toupper_intr_and, toupper_intr_and, 1<<10)->UseManualTime();
+BENCHMARK_CAPTURE(BM_toupper, toupper_intr_and, toupper_intr_and, 1<<10);
 #endif // SSE2 || AVX2
 
 
