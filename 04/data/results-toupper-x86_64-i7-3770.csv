@@ -1,0 +1,8 @@
+Run on (2 X 3400 MHz CPU s)
+2017-02-18 03:53:35
+name,iterations,real_time,cpu_time,time_unit,bytes_per_second,items_per_second,label,error_occurred,error_message
+"BM_toupper/toupper_noact",33372315,15.6098,15.5973,ns,,,,,
+"BM_toupper/toupper_simple",803697,868.699,868.457,ns,,,,,
+"BM_toupper/toupper_autovec",7034940,99.446,99.4417,ns,,,,,
+"BM_toupper/toupper_intr_and_sse2",7334757,95.8931,95.8613,ns,,,,,
+"BM_toupper/toupper_intr_and",8000105,93.6572,93.5824,ns,,,,,
