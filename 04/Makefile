@@ -2,7 +2,7 @@ NAME = toupper-bench
 SRCS = $(wildcard *.cc)
 OBJS = $(subst .cc,.o,$(SRCS))
 
-CXXFLAGS ?= -O0
+CXXFLAGS ?= -O3
 CXXFLAGS += -std=c++14 -Wall -Wextra -pedantic -fno-omit-frame-pointer
 
 GBENCH_DIR := $(firstword $(wildcard benchmark/*))
